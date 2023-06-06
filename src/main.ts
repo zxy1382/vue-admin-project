@@ -8,8 +8,10 @@ import 'virtual:svg-icons-register';
 import globalComponent from '@/components';
 //引入全局样式
 import '@/styles/index.scss';
+import router from './router';
 
 const app = createApp(App);
 //安装自定义插件
 app.use(globalComponent);
+app.use(router);
 app.mount('#app');
