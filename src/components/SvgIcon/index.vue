@@ -7,26 +7,17 @@
 </template>
 
 <script setup lang="ts">
-defineProps({
-  //前缀
-  prefix: {
-    type: String,
-    default: '#icon-',
-  },
-  name: String,
-  //接收父传递的颜色
-  color: {
-    type: String,
-    default: '',
-  },
-  width: {
-    type: String,
-    default: '16px',
-  },
-  height: {
-    type: String,
-    default: '16px',
-  },
+interface Props {
+  prefix?: string;
+  name: string;
+  color?: string;
+  width?: string;
+  height?: string;
+}
+withDefaults(defineProps<Props>(), {
+  prefix: '#icon-',
+  width: '16px',
+  height: '16px',
 });
 </script>
 
