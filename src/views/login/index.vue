@@ -9,6 +9,7 @@
           <el-form-item>
             <el-input
               :prefix-icon="User"
+              clearable
               v-model="loginForm.username"
             ></el-input>
           </el-form-item>
@@ -16,6 +17,7 @@
             <el-input
               type="password"
               :prefix-icon="Lock"
+              clearable
               show-password
               v-model="loginForm.password"
             ></el-input>
