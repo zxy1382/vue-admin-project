@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import { ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus';
 //用axios的create方法，创建axios实例
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
@@ -33,14 +33,13 @@ request.interceptors.response.use(
         msg = '服务器出现问题';
         break;
       default:
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         msg = '无网络';
         break;
     }
-    // ElMessage({
-    //   type: 'error',
-    //   message: msg,
-    // });
+    ElMessage({
+      type: 'error',
+      message: msg,
+    });
     return Promise.reject(error);
   },
 );
