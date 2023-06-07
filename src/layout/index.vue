@@ -1,10 +1,21 @@
 <template>
-  <div class="layout_container">
+  <!-- <div class="layout_container">
     <div class="layout_slider"></div>
     <div class="layout_tabbar"></div>
     <div class="layout_main">
       <p style="height: 1000px">段落</p>
     </div>
+  </div> -->
+  <div class="common-layout">
+    <el-container>
+      <el-aside width="260px" style="background: red">Aside</el-aside>
+      <el-container>
+        <el-header style="background: greenyellow">Header</el-header>
+        <el-main style="background: cyan">
+          <p style="height: 1000px">Main</p>
+        </el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
