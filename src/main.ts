@@ -8,9 +8,11 @@ import globalComponent from '@/components';
 //引入全局样式
 import '@/styles/index.scss';
 import router from './router';
+import pinia from './store';
 
 const app = createApp(App);
 //安装自定义插件
 app.use(globalComponent);
 app.use(router);
+app.use(pinia);
 app.mount('#app');
