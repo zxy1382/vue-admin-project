@@ -4,8 +4,8 @@ export interface loginType {
 }
 
 interface dataType {
-  token: string;
-  message: string;
+  token?: string;
+  message?: string;
 }
 
 export interface loginResponseData {
