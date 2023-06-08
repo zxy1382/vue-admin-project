@@ -4,12 +4,15 @@ import { reqLogin } from '@/api/user';
 import { loginResponseData, loginType } from '@/api/user/type';
 import { userState } from './types/type';
 import { SET_TOKEN, GET_TOKEN } from '@/utils/token';
+//引入路由
+import { routes } from '@/router/routes';
 
 const useUserStore = defineStore('User', {
   //存储数据
   state: (): userState => {
     return {
       token: GET_TOKEN(),
+      menuList: routes, //仓库存储生成菜单的数据
     };
   },
   //异步|逻辑
