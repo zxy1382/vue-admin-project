@@ -1,25 +1,24 @@
 <template>
-  <!-- <div class="layout_container">
-    <div class="layout_slider"></div>
-    <div class="layout_tabbar"></div>
-    <div class="layout_main">
-      <p style="height: 1000px">段落</p>
-    </div>
-  </div> -->
   <div class="layout_container">
     <el-container>
       <el-aside class="layout_slider">
         <Logo />
         <el-scrollbar height="calc(100vh - 80px)">
-          <el-menu default-active="2" class="layout_menu">
+          <el-menu :default-active="route.path" class="layout_menu" router>
             <Menu :menuList="userStore.menuList" />
           </el-menu>
         </el-scrollbar>
       </el-aside>
       <el-container>
-        <el-header class="layout_header">Header</el-header>
+        <el-header class="layout_header">
+          <Tabbar />
+        </el-header>
         <el-main class="layout_main">
-          <p style="height: 1000px">Main</p>
+          <router-view v-slot="{ Component }">
+            <transition name="fade">
+              <component :is="Component" />
+            </transition>
+          </router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -27,11 +26,15 @@
 </template>
 
 <script setup lang="ts">
+import { useRoute } from 'vue-router';
 import Logo from './Logo/index.vue';
 import Menu from './Menu/index.vue';
+import Tabbar from './Tabbar/index.vue';
 //获取用户相关的仓库
 import useUserStore from '@/store/modules/user';
+
 const userStore = useUserStore();
+const route = useRoute();
 </script>
 
 <style scoped lang="scss">
@@ -53,10 +56,20 @@ const userStore = useUserStore();
     }
   }
   .layout_header {
-    background: cadetblue;
+    color: #000;
   }
   .layout_main {
     background: yellowgreen;
+    //路由过渡动效
+    .fade-enter-from {
+      transform: scale(0);
+    }
+    .fade-enter-active {
+      transition: all 0.3s;
+    }
+    .fade-enter-to {
+      transform: scale(1);
+    }
   }
 }
 </style>
