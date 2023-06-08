@@ -24,7 +24,7 @@ import setting from '@/setting';
   p {
     margin-left: 10px;
     font-size: 20px;
-    // font-weight: bold;
+    font-weight: bold;
   }
 }
 </style>
