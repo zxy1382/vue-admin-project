@@ -70,7 +70,7 @@ const route = useRoute();
     color: #000;
   }
   .layout_main {
-    background: yellowgreen;
+    color: #000;
     //路由过渡动效
     .fade-enter-from {
       transform: scale(0);

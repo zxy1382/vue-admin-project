@@ -28,6 +28,7 @@ interface userInfo {
 
 interface user {
   checkUser: userInfo;
+  message: string;
 }
 
 export interface userResponseData {

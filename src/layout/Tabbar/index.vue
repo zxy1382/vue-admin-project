@@ -27,13 +27,13 @@
       <el-button icon="FullScreen" circle @click="fullScreenHandle" />
       <el-button icon="Setting" circle />
       <img
-        src="../../../public/logo.png"
+        :src="userStore.avatar"
         alt=""
-        style="width: 24px; height: 24px; margin-left: 20px"
+        style="width: 24px; height: 24px; margin-left: 20px; border-radius: 50%"
       />
       <el-dropdown style="margin-left: 10px">
         <span class="el-dropdown-link">
-          admin
+          {{ userStore.username }}
           <el-icon class="el-icon--right">
             <arrow-down />
           </el-icon>
@@ -50,8 +50,10 @@
 
 <script setup lang="ts">
 import useLayoutStore from '@/store/modules/setting';
+import useUserStore from '@/store/modules/user';
 import { useRoute } from 'vue-router';
 
+const userStore = useUserStore();
 //定义响应式数据来控制图标的切换
 const layoutStore = useLayoutStore();
 const changeIcon = () => {
