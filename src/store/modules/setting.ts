@@ -6,6 +6,7 @@ const useLayoutStore = defineStore('SettingStore', {
     return {
       //侧边栏是否折叠
       collapsed: false,
+      refresh: false, //是否刷新
     };
   },
 });

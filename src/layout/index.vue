@@ -23,11 +23,7 @@
           <Tabbar />
         </el-header>
         <el-main class="layout_main">
-          <router-view v-slot="{ Component }">
-            <transition name="fade">
-              <component :is="Component" />
-            </transition>
-          </router-view>
+          <Main />
         </el-main>
       </el-container>
     </el-container>
@@ -39,6 +35,7 @@ import { useRoute } from 'vue-router';
 import Logo from './Logo/index.vue';
 import Menu from './Menu/index.vue';
 import Tabbar from './Tabbar/index.vue';
+import Main from './Main/index.vue';
 //获取用户相关的仓库
 import useUserStore from '@/store/modules/user';
 import useLayoutStore from '@/store/modules/setting';

@@ -23,7 +23,7 @@
       </el-breadcrumb>
     </div>
     <div class="tabbar_right">
-      <el-button icon="Refresh" circle />
+      <el-button icon="Refresh" circle @click="refreshHandle" />
       <el-button icon="FullScreen" circle />
       <el-button icon="Setting" circle />
       <img
@@ -58,7 +58,9 @@ const changeIcon = () => {
   layoutStore.collapsed = !layoutStore.collapsed;
 };
 const route = useRoute();
-console.log(route);
+const refreshHandle = () => {
+  layoutStore.refresh = !layoutStore.refresh;
+};
 </script>
 
 <style scoped lang="scss">
