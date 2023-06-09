@@ -44,6 +44,7 @@ export const routes = [
     path: '/acl',
     component: () => import('@/layout/index.vue'),
     name: 'acl',
+    redirect: '/acl/user',
     meta: {
       title: '权限管理',
       hidden: false,
@@ -83,6 +84,7 @@ export const routes = [
     path: '/product',
     component: () => import('@/layout/index.vue'),
     name: 'product',
+    redirect: '/product/brand',
     meta: {
       title: '商品管理',
       hidden: false,

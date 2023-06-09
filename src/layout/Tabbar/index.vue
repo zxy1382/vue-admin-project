@@ -5,10 +5,21 @@
         <component :is="layoutStore.collapsed ? 'Expand' : 'Fold'"></component>
       </el-icon>
       <el-breadcrumb separator-icon="ArrowRight">
-        <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-        <el-breadcrumb-item>promotion management</el-breadcrumb-item>
-        <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-        <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+        <el-breadcrumb-item
+          v-for="item in route.matched"
+          :key="item.path"
+          v-show="item.path !== '/'"
+          :to="item.path"
+        >
+          <div style="display: flex; align-items: center">
+            <el-icon style="margin-right: 4px">
+              <component :is="item.meta.icon"></component>
+            </el-icon>
+            <span>
+              {{ item.meta.title }}
+            </span>
+          </div>
+        </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="tabbar_right">
@@ -39,12 +50,15 @@
 
 <script setup lang="ts">
 import useLayoutStore from '@/store/modules/setting';
+import { useRoute } from 'vue-router';
 
 //定义响应式数据来控制图标的切换
 const layoutStore = useLayoutStore();
 const changeIcon = () => {
   layoutStore.collapsed = !layoutStore.collapsed;
 };
+const route = useRoute();
+console.log(route);
 </script>
 
 <style scoped lang="scss">
