@@ -12,11 +12,11 @@ import setting from '@/setting';
 <style scoped lang="scss">
 .logo {
   width: 100%;
-  height: fit-content;
+  height: 50px;
   color: #fff;
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 10px;
   img {
     width: 40px;
     height: 40px;

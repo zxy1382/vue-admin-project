@@ -1,10 +1,19 @@
 <template>
   <div class="layout_container">
     <el-container>
-      <el-aside class="layout_slider">
+      <el-aside
+        class="layout_slider"
+        :class="{ collapse: layoutStore.collapsed ? true : false }"
+      >
         <Logo />
         <el-scrollbar height="calc(100vh - 80px)">
-          <el-menu :default-active="route.path" class="layout_menu" router>
+          <el-menu
+            :default-active="route.path"
+            class="layout_menu"
+            router
+            :collapse="layoutStore.collapsed"
+            active-text-color="yellowgreen"
+          >
             <Menu :menuList="userStore.menuList" />
           </el-menu>
         </el-scrollbar>
@@ -32,8 +41,10 @@ import Menu from './Menu/index.vue';
 import Tabbar from './Tabbar/index.vue';
 //获取用户相关的仓库
 import useUserStore from '@/store/modules/user';
+import useLayoutStore from '@/store/modules/setting';
 
 const userStore = useUserStore();
+const layoutStore = useLayoutStore();
 const route = useRoute();
 </script>
 
@@ -47,12 +58,15 @@ const route = useRoute();
     height: 100vh;
     background: $base-menu-background;
     overflow: hidden;
+    transition: all 0.3s;
     .layout_menu {
       --el-menu-bg-color: '#001529';
       --el-menu-text-color: '#fff';
-      --el-menu-active-color: 'red';
       --el-menu-hover-bg-color: none;
       border-right: none;
+    }
+    &.collapse {
+      width: 60px;
     }
   }
   .layout_header {
