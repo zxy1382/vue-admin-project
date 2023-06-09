@@ -24,7 +24,7 @@
     </div>
     <div class="tabbar_right">
       <el-button icon="Refresh" circle @click="refreshHandle" />
-      <el-button icon="FullScreen" circle />
+      <el-button icon="FullScreen" circle @click="fullScreenHandle" />
       <el-button icon="Setting" circle />
       <img
         src="../../../public/logo.png"
@@ -58,8 +58,18 @@ const changeIcon = () => {
   layoutStore.collapsed = !layoutStore.collapsed;
 };
 const route = useRoute();
+//刷新
 const refreshHandle = () => {
   layoutStore.refresh = !layoutStore.refresh;
+};
+//全屏
+const fullScreenHandle = () => {
+  layoutStore.fullScreen = !layoutStore.fullScreen;
+  if (layoutStore.fullScreen) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
 };
 </script>
 

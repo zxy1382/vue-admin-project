@@ -7,6 +7,7 @@ const useLayoutStore = defineStore('SettingStore', {
       //侧边栏是否折叠
       collapsed: false,
       refresh: false, //是否刷新
+      fullScreen: false, //是否全屏
     };
   },
 });
