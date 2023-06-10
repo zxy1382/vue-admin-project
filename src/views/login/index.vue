@@ -48,7 +48,7 @@
 import { reactive, ref } from 'vue';
 import { User, Lock } from '@element-plus/icons-vue';
 import useUserStore from '@/store/modules/user';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { ElNotification } from 'element-plus';
 import type { FormRules } from 'element-plus';
 import { getTime } from '@/utils/time';
@@ -57,6 +57,7 @@ const loading = ref(false);
 
 const userStore = useUserStore();
 const $router = useRouter();
+const route = useRoute();
 
 const loginFormRef = ref();
 
@@ -71,13 +72,18 @@ const login = async () => {
   try {
     await userStore.userLogin(loginForm);
     loading.value = false;
-    $router.push('/');
+    if (route.query) {
+      $router.push(route.query.redirect as string);
+    } else {
+      $router.push('/');
+    }
     ElNotification({
       type: 'success',
       message: '欢迎回来',
       title: `Hi,${getTime()}好`,
     });
   } catch (error) {
+    console.log(error);
     ElNotification({
       type: 'error',
       message: (error as Error).message,

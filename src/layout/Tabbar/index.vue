@@ -40,7 +40,7 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item @click="logout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -51,7 +51,7 @@
 <script setup lang="ts">
 import useLayoutStore from '@/store/modules/setting';
 import useUserStore from '@/store/modules/user';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const userStore = useUserStore();
 //定义响应式数据来控制图标的切换
@@ -60,6 +60,7 @@ const changeIcon = () => {
   layoutStore.collapsed = !layoutStore.collapsed;
 };
 const route = useRoute();
+const router = useRouter();
 //刷新
 const refreshHandle = () => {
   layoutStore.refresh = !layoutStore.refresh;
@@ -72,6 +73,15 @@ const fullScreenHandle = () => {
   } else {
     document.exitFullscreen();
   }
+};
+//退出登录
+const logout = () => {
+  localStorage.removeItem('TOKEN');
+  userStore.logOut();
+  router.push({
+    path: '/login',
+    query: { redirect: route.path },
+  });
 };
 </script>
 

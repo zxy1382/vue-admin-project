@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import './permission';
 import 'element-plus/dist/index.css';
 //svg插件的配置代码
 import 'virtual:svg-icons-register';
