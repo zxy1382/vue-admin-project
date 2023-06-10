@@ -1,37 +1,29 @@
-export interface loginType {
+/**
+ * 用户登录携带的参数数据类型
+ */
+export interface loginFormType {
   username: string;
   password: string;
 }
 
-interface dataType {
-  token?: string;
-  message?: string;
-}
-
-export interface loginResponseData {
+export interface ResponseData {
   code: number;
-  data: dataType;
+  message: string;
+  ok: boolean;
+}
+export interface loginResponseData extends ResponseData {
+  data: string | null;
 }
 
 //用户信息数据类型
 interface userInfo {
-  userId: number;
-  avatar: string;
-  username: string;
-  password: string;
-  desc: string;
-  roles: string[];
-  buttons: string[];
   routes: string[];
-  token: string;
+  buttons: string[];
+  roles: string[];
+  name: string;
+  avatar: string;
 }
 
-interface user {
-  checkUser: userInfo;
-  message: string;
-}
-
-export interface userResponseData {
-  code: number;
-  data: user;
+export interface userResponseData extends ResponseData {
+  data: userInfo;
 }

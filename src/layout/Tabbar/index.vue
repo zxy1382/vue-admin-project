@@ -75,9 +75,8 @@ const fullScreenHandle = () => {
   }
 };
 //退出登录
-const logout = () => {
-  localStorage.removeItem('TOKEN');
-  userStore.logOut();
+const logout = async () => {
+  await userStore.logOut();
   router.push({
     path: '/login',
     query: { redirect: route.path },

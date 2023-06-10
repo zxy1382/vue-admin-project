@@ -61,7 +61,7 @@ const route = useRoute();
 
 const loginFormRef = ref();
 
-const loginForm = reactive({ username: 'admin', password: '111111' });
+const loginForm = reactive({ username: 'admin', password: 'atguigu123' });
 
 const login = async () => {
   await loginFormRef.value.validate();
