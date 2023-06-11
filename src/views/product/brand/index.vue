@@ -48,6 +48,7 @@
                 confirm-button-text="确认"
                 cancel-button-text="取消"
                 icon="Delete"
+                placement="top"
                 :title="`确定要删除${scope.row.tmName}吗？`"
                 @confirm="removeTradeMark(scope.row.id)"
               >
