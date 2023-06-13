@@ -7,6 +7,7 @@
             v-model="categoryStore.c1Id"
             placeholder="请选择"
             @change="handleChangeCategor1"
+            :disabled="scene === 1"
           >
             <el-option
               v-for="c1 in categoryStore.c1List"
@@ -21,6 +22,7 @@
             v-model="categoryStore.c2Id"
             placeholder="请选择"
             @change="handleChangeCategor2"
+            :disabled="scene === 1"
           >
             <el-option
               v-for="c2 in categoryStore.c2List"
@@ -31,7 +33,11 @@
           </el-select>
         </el-form-item>
         <el-form-item label="三级分类">
-          <el-select v-model="categoryStore.c3Id" placeholder="请选择">
+          <el-select
+            v-model="categoryStore.c3Id"
+            placeholder="请选择"
+            :disabled="scene === 1"
+          >
             <el-option
               v-for="c3 in categoryStore.c3List"
               :label="c3.name"
@@ -68,6 +74,11 @@ const handleChangeCategor2 = () => {
   categoryStore.c3List = [];
   categoryStore.c3Id = '';
 };
+
+defineProps({
+  // 用于接收父组件传递的值
+  scene: Number,
+});
 </script>
 
 <style scoped></style>
