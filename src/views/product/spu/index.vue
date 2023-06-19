@@ -109,10 +109,12 @@ const getSpuList = async () => {
 //切换场景的自定义事件
 const changeScene = (val: number) => {
   scene.value = val;
+  getSpuList();
 };
 
 const addSpu = () => {
   scene.value = 1;
+  spuForm.value?.initAddSpu(categoryStore.c3Id as number);
 };
 
 const updateSpu = async (row: Spu) => {

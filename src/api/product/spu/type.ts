@@ -47,6 +47,8 @@ export interface SpuImage {
   spuId?: number;
   createTime?: string;
   updateTime?: string;
+  name?: string;
+  url?: string;
 }
 
 export interface SpuImageResponse extends ResponseData {
@@ -68,6 +70,7 @@ export interface SpuSaleAttr {
   baseSaleAttrId: number | string;
   saleAttrName: string;
   spuSaleAttrValueList: SpuSaleAttrValue[];
+  flag?: boolean;
 }
 
 export interface SpuSaleAttrResponse extends ResponseData {

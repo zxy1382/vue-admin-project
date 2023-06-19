@@ -90,11 +90,12 @@
               {{ item.saleAttrValueName }}
             </el-tag>
             <el-input
-              v-if="inputVisible"
+              v-if="scope.row.flag"
               ref="InputRef"
               v-model="tagInputValue"
-              style="width: 50px; margin-left: 5px"
+              style="width: 100px; margin-left: 5px"
               size="small"
+              placeholder="请输入属性值"
               @keyup.enter="handleInputConfirm(scope.row)"
               @blur="handleInputConfirm(scope.row)"
             />
@@ -116,7 +117,7 @@
       </el-table>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary">保存</el-button>
+      <el-button type="primary" @click="save">保存</el-button>
       <el-button @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
@@ -124,6 +125,7 @@
 
 <script setup lang="ts">
 import {
+  fetchAddOrUpdateSpu,
   fetchBaseSaleAttrList,
   fetchSaleAttrList,
   fetchSpuImages,
@@ -141,7 +143,7 @@ import {
   BaseSaleAttr,
   SpuSaleAttrValue,
 } from '@/api/product/spu/type';
-import { ElInput, UploadProps } from 'element-plus';
+import { ElInput, ElMessage, UploadProps } from 'element-plus';
 import { computed, nextTick, reactive, ref } from 'vue';
 
 const $emit = defineEmits(['changeScene']);
@@ -160,7 +162,6 @@ const dialogImageUrl = ref<string>('');
 const dialogVisible = ref<boolean>(false);
 const saleAttrList = ref<SpuSaleAttr[]>([]);
 const baseSaleAttrList = ref<BaseSaleAttr[]>([]);
-const inputVisible = ref<boolean>(false);
 const tagInputValue = ref<string>('');
 const InputRef = ref();
 const unSelectSaleAttrValue = ref<string>('');
@@ -174,7 +175,6 @@ const unSelectSaleAttr = computed(() => {
     });
   });
 });
-console.log(unSelectSaleAttr);
 
 const cancel = () => {
   $emit('changeScene', 0);
@@ -203,6 +203,26 @@ const initSpuFormData = async (spu: Spu) => {
   baseSaleAttrList.value = baseSaleAttrListRes.data;
 };
 
+const initAddSpu = async (c3Id: number) => {
+  //清空表单数据
+  Object.assign(spuData, {
+    spuName: '',
+    description: '',
+    tmId: '',
+    category3Id: '',
+    spuImageList: null,
+    spuSaleAttrList: null,
+  });
+  imgList.value = [];
+  saleAttrList.value = [];
+  const tradeMarkListRes: TradeMarkResponse = await fetchTrademarkList();
+  const baseSaleAttrListRes: BaseSaleAttrResponse =
+    await fetchBaseSaleAttrList();
+  tradeMarkList.value = tradeMarkListRes.data;
+  baseSaleAttrList.value = baseSaleAttrListRes.data;
+  spuData.category3Id = c3Id;
+};
+
 const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
   dialogImageUrl.value = uploadFile.url!;
   dialogVisible.value = true;
@@ -213,30 +233,39 @@ const handleCloseTag = (row: SpuSaleAttr, tag: SpuSaleAttrValue) => {
 };
 
 const showInput = (row: SpuSaleAttr) => {
-  inputVisible.value = true;
-  // row.spuSaleAttrValueList.push({
-  //   baseSaleAttrId: row.baseSaleAttrId,
-  //   saleAttrValueName: '',
-  //   flag: true,
-  // });
+  row.flag = true;
   nextTick(() => {
     InputRef.value.focus();
   });
 };
 
 const handleInputConfirm = (row: SpuSaleAttr) => {
+  //判断属性值是否在当前属性值列表中已存在
+  const repeat = row.spuSaleAttrValueList.find((item) => {
+    return item.saleAttrValueName === tagInputValue.value;
+  });
+  if (repeat) {
+    tagInputValue.value = '';
+    ElMessage({
+      type: 'warning',
+      message: '属性值已存在',
+    });
+    return;
+  }
   if (tagInputValue.value) {
     row.spuSaleAttrValueList.push({
       baseSaleAttrId: row.baseSaleAttrId,
       saleAttrValueName: tagInputValue.value,
     });
   }
-  inputVisible.value = false;
+  row.flag = false;
   tagInputValue.value = '';
 };
 
 const addSaleAttr = () => {
-  const [baseSaleAttrId, saleAttrName] = unSelectSaleAttrValue.value.split(':');
+  const baseSaleAttrId = Number(unSelectSaleAttrValue.value.split(':')[0]);
+  const saleAttrName = unSelectSaleAttrValue.value.split(':')[1];
+  // const [baseSaleAttrId, saleAttrName] = unSelectSaleAttrValue.value.split(':');
   const newSaleAttr: SpuSaleAttr = {
     baseSaleAttrId,
     saleAttrName,
@@ -246,8 +275,32 @@ const addSaleAttr = () => {
   unSelectSaleAttrValue.value = '';
 };
 
+const save = async () => {
+  spuData.spuImageList = imgList.value.map((item: any) => {
+    return {
+      imgName: item.name,
+      imgUrl: (item.response && item.response.data) || item.url,
+    };
+  });
+  spuData.spuSaleAttrList = saleAttrList.value;
+  const res = await fetchAddOrUpdateSpu(spuData);
+  if (res.code === 200) {
+    ElMessage({
+      type: 'success',
+      message: '保存成功',
+    });
+    $emit('changeScene', 0);
+  } else {
+    ElMessage({
+      type: 'error',
+      message: '保存失败',
+    });
+  }
+};
+
 defineExpose({
   initSpuFormData,
+  initAddSpu,
 });
 </script>
 
