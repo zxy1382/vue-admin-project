@@ -1,6 +1,8 @@
 import request from '@/utils/request';
 import {
   BaseSaleAttrResponse,
+  Sku,
+  SkuResponse,
   Spu,
   SpuImageResponse,
   SpuResponse,
@@ -19,6 +21,11 @@ enum API {
   BASE_SALE_ATTR_URL = '/admin/product/baseSaleAttrList',
   ADDSPU_URL = '/admin/product/saveSpuInfo',
   UPDATESPU_URL = '/admin/product/updateSpuInfo',
+  //添加sku
+  ADDSKU_URL = '/admin/product/saveSkuInfo',
+  //查看某个spu下的所有sku列表
+  SKUINFO_URL = '/admin/product/findBySpuId/',
+  DELETESPU_URL = '/admin/product/deleteSpu/',
 }
 
 export function fetchSpuList(
@@ -57,4 +64,16 @@ export function fetchAddOrUpdateSpu(data: Spu) {
   } else {
     return request.post<any, any>(API.ADDSPU_URL, data);
   }
+}
+
+export function fetchAddSku(data: Sku) {
+  return request.post<any, any>(API.ADDSKU_URL, data);
+}
+
+export function fetchSkuInfo(spuId: number | string) {
+  return request.get<any, SkuResponse>(API.SKUINFO_URL + spuId);
+}
+
+export function fetchDeleteSpu(spuId: number | string) {
+  return request.delete<any, any>(API.DELETESPU_URL + spuId);
 }
