@@ -87,15 +87,20 @@ export interface BaseSaleAttrResponse extends ResponseData {
 }
 
 export interface skuAttr {
+  id?: number;
+  valueName?: string;
   attrId: number | string;
   valueId: number | string;
 }
 
 export interface skuSaleAttr {
+  id?: number;
+  saleAttrValueName?: string;
   saleAttrId: number | string;
   saleAttrValueId: number | string;
 }
 export interface Sku {
+  id?: number;
   category3Id: number | string;
   spuId: number | string;
   tmId: number | string;
@@ -106,6 +111,8 @@ export interface Sku {
   skuDefaultImg: string;
   skuAttrValueList?: skuAttr[];
   skuSaleAttrValueList?: skuSaleAttr[];
+  isSale?: number;
+  skuImageList?: any[];
 }
 
 export interface SkuResponse extends ResponseData {
