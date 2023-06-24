@@ -24,15 +24,15 @@ export interface RoleResponseData extends ResponseData {
 }
 
 export interface Permission {
-  id: number;
-  type: number;
+  id?: number;
+  type?: number;
   pid: number;
   name: string;
   code: string;
-  toCode: string;
-  status: null;
+  toCode?: string;
+  status?: null;
   level: number;
-  select: boolean;
+  select?: boolean;
   children?: Permission[];
 }
 
