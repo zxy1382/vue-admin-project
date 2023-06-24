@@ -25,7 +25,29 @@
     <div class="tabbar_right">
       <el-button icon="Refresh" circle @click="refreshHandle" />
       <el-button icon="FullScreen" circle @click="fullScreenHandle" />
-      <el-button icon="Setting" circle />
+      <el-popover
+        placement="bottom"
+        title="主题设置"
+        :width="260"
+        trigger="hover"
+      >
+        <el-form>
+          <el-form-item label="主题颜色">
+            <el-color-picker v-model="color" show-alpha @change="setColor" />
+          </el-form-item>
+          <el-form-item label="暗黑模式">
+            <el-switch
+              v-model="dark"
+              active-icon="Moon"
+              inactive-icon="Sunny"
+              @change="changeDark"
+            ></el-switch>
+          </el-form-item>
+        </el-form>
+        <template #reference>
+          <el-button icon="Setting" circle />
+        </template>
+      </el-popover>
       <img
         :src="userStore.avatar"
         alt=""
@@ -51,6 +73,7 @@
 <script setup lang="ts">
 import useLayoutStore from '@/store/modules/setting';
 import useUserStore from '@/store/modules/user';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const userStore = useUserStore();
@@ -61,6 +84,8 @@ const changeIcon = () => {
 };
 const route = useRoute();
 const router = useRouter();
+const dark = ref<boolean>(false);
+const color = ref<string>('#409EFF');
 //刷新
 const refreshHandle = () => {
   layoutStore.refresh = !layoutStore.refresh;
@@ -81,6 +106,21 @@ const logout = async () => {
     path: '/login',
     query: { redirect: route.path },
   });
+};
+
+const changeDark = (val: any) => {
+  const html = document.documentElement;
+  if (val) {
+    html.className = 'dark';
+  } else {
+    html.className = '';
+  }
+};
+
+const setColor = () => {
+  const html = document.documentElement;
+  localStorage.setItem('color', color.value);
+  html.style.setProperty('--el-color-primary', color.value);
 };
 </script>
 

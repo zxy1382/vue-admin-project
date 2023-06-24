@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import './permission';
 import 'element-plus/dist/index.css';
+import 'element-plus/theme-chalk/dark/css-vars.css';
 //svg插件的配置代码
 import 'virtual:svg-icons-register';
 //引入自定义插件对象
