@@ -30,7 +30,8 @@ router.beforeEach(async (to, _, next) => {
       } else {
         try {
           await userStore.getUserInfo();
-          next();
+          //获取用户信息成功后，根据用户信息生成可访问异步路由
+          next({ ...to });
         } catch (error) {
           await userStore.logOut();
           next({ path: '/login', query: { redirect: to.path } });

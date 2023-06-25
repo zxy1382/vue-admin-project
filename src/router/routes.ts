@@ -1,4 +1,4 @@
-export const routes = [
+export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
@@ -41,9 +41,21 @@ export const routes = [
     },
   },
   {
+    path: '/404',
+    component: () => import('@/views/404/index.vue'),
+    name: '404',
+    meta: {
+      title: '404',
+      hidden: true,
+    },
+  },
+];
+
+export const asyncRoutes = [
+  {
     path: '/acl',
     component: () => import('@/layout/index.vue'),
-    name: 'acl',
+    name: 'Acl',
     redirect: '/acl/user',
     meta: {
       title: '权限管理',
@@ -54,6 +66,7 @@ export const routes = [
       {
         path: '/acl/user',
         component: () => import('@/views/acl/user/index.vue'),
+        name: 'User',
         meta: {
           title: '用户管理',
           hidden: false,
@@ -63,6 +76,7 @@ export const routes = [
       {
         path: '/acl/role',
         component: () => import('@/views/acl/role/index.vue'),
+        name: 'Role',
         meta: {
           title: '角色管理',
           hidden: false,
@@ -72,6 +86,7 @@ export const routes = [
       {
         path: '/acl/premission',
         component: () => import('@/views/acl/permission/index.vue'),
+        name: 'Permission',
         meta: {
           title: '菜单管理',
           hidden: false,
@@ -83,7 +98,7 @@ export const routes = [
   {
     path: '/product',
     component: () => import('@/layout/index.vue'),
-    name: 'product',
+    name: 'Product',
     redirect: '/product/brand',
     meta: {
       title: '商品管理',
@@ -94,6 +109,7 @@ export const routes = [
       {
         path: '/product/brand',
         component: () => import('@/views/product/brand/index.vue'),
+        name: 'Trademark',
         meta: {
           title: '品牌管理',
           hidden: false,
@@ -103,6 +119,7 @@ export const routes = [
       {
         path: '/product/attr',
         component: () => import('@/views/product/attr/index.vue'),
+        name: 'Attr',
         meta: {
           title: '属性管理',
           hidden: false,
@@ -112,6 +129,7 @@ export const routes = [
       {
         path: '/product/spu',
         component: () => import('@/views/product/spu/index.vue'),
+        name: 'Spu',
         meta: {
           title: 'SPU管理',
           hidden: false,
@@ -121,6 +139,7 @@ export const routes = [
       {
         path: '/product/sku',
         component: () => import('@/views/product/sku/index.vue'),
+        name: 'Sku',
         meta: {
           title: 'SKU管理',
           hidden: false,
@@ -129,15 +148,9 @@ export const routes = [
       },
     ],
   },
-  {
-    path: '/404',
-    component: () => import('@/views/404/index.vue'),
-    name: '404',
-    meta: {
-      title: '404',
-      hidden: true,
-    },
-  },
+];
+
+export const anyRoutes = [
   {
     path: '/:pathMatch(.*)*',
     redirect: '/404',

@@ -11,10 +11,13 @@ import globalComponent from '@/components';
 import '@/styles/index.scss';
 import router from './router';
 import pinia from './store';
+import { isHasButton } from '@/directive/hasBtn';
 
 const app = createApp(App);
 //安装自定义插件
 app.use(globalComponent);
 app.use(router);
 app.use(pinia);
+//全局指令
+app.directive('hasBtn', isHasButton);
 app.mount('#app');

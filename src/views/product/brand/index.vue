@@ -1,7 +1,12 @@
 <template>
   <div>
     <el-card class="box-card">
-      <el-button type="primary" icon="Plus" @click="addTradeMark">
+      <el-button
+        type="primary"
+        icon="Plus"
+        @click="addTradeMark"
+        v-hasBtn="'btn.Trademark.add'"
+      >
         添加品牌
       </el-button>
       <div class="table">

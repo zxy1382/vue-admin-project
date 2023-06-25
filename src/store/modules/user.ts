@@ -9,16 +9,34 @@ import {
 import { userState } from './types/type';
 import { SET_TOKEN, GET_TOKEN, REMOVE_TOKEN } from '@/utils/token';
 //引入路由
-import { routes } from '@/router/routes';
+import { constantRoutes, asyncRoutes, anyRoutes } from '@/router/routes';
+import router from '@/router';
+//引入深拷贝方法
+//@ts-ignore
+import cloneDeep from 'lodash/cloneDeep';
+
+//过滤当前用户需要展示的路由
+export const filterRoutes = (asyncRoute: any, routes: string[]) => {
+  const res = asyncRoute.filter((item: any) => {
+    if (routes.includes(item.name)) {
+      if (item.children && item.children.length > 0) {
+        item.children = filterRoutes(item.children, routes);
+      }
+      return true;
+    }
+  });
+  return res;
+};
 
 const useUserStore = defineStore('User', {
   //存储数据
   state: (): userState => {
     return {
       token: GET_TOKEN(),
-      menuList: routes, //仓库存储生成菜单的数据
+      menuList: [...constantRoutes, ...asyncRoutes, ...anyRoutes], //仓库存储生成菜单的数据
       username: '',
       avatar: '',
+      buttons: [], //按钮权限
     };
   },
   //异步|逻辑
@@ -41,6 +59,17 @@ const useUserStore = defineStore('User', {
       if (res.code === 200) {
         this.username = res.data.name;
         this.avatar = res.data.avatar;
+        this.buttons = res.data.buttons;
+        //过滤菜单
+        const userAsyncRoute = filterRoutes(
+          cloneDeep(asyncRoutes),
+          res.data.routes,
+        );
+        this.menuList = [...constantRoutes, ...userAsyncRoute, ...anyRoutes];
+        [...userAsyncRoute, ...anyRoutes].forEach((item: any) => {
+          router.addRoute(item);
+        });
+        return 'ok';
       } else {
         return Promise.reject(new Error(res.message));
       }
